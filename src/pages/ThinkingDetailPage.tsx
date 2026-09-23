@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
+
+import { ContentTaxonomy } from "../components/content/ContentTaxonomy";
 import { RichText } from "../components/content/RichText";
-import { getArticleBySlug } from "../features/thinking/api/getArticleBySlug";
-import type { Article } from "../features/thinking/types/article";
-import { urlFor } from "../services/sanity/image";
 import { PageLoading } from "../components/feedback/PageLoading";
 import { PageMessage } from "../components/feedback/PageMessage";
+import { getArticleBySlug } from "../features/thinking/api/getArticleBySlug";
+import type { Article } from "../features/thinking/types/article";
 import { usePageMeta } from "../hooks/usePageMeta";
+import { urlFor } from "../services/sanity/image";
 
 const dateFormatter = new Intl.DateTimeFormat("en-GB", {
   day: "numeric",
@@ -143,18 +145,12 @@ export function ThinkingDetailPage() {
               {article.excerpt}
             </p>
 
-            {article.tags?.length ? (
-              <ul className="mt-6 flex flex-wrap gap-2">
-                {article.tags.map((tag) => (
-                  <li
-                    key={tag}
-                    className="rounded-full bg-slate-100 px-3 py-1 text-sm"
-                  >
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            ) : null}
+            <div className="mt-8">
+              <ContentTaxonomy
+                category={article.category}
+                tags={article.tags}
+              />
+            </div>
           </header>
 
           {article.body?.length ? (

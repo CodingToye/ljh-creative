@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
+
+import { ContentTaxonomy } from "../components/content/ContentTaxonomy";
 import { RichText } from "../components/content/RichText";
-import { getWorkBySlug } from "../features/work/api/getWorkBySlug";
-import type { Work } from "../features/work/types/work";
-import { urlFor } from "../services/sanity/image";
 import { PageLoading } from "../components/feedback/PageLoading";
 import { PageMessage } from "../components/feedback/PageMessage";
+import { getWorkBySlug } from "../features/work/api/getWorkBySlug";
+import type { Work } from "../features/work/types/work";
 import { usePageMeta } from "../hooks/usePageMeta";
+import { urlFor } from "../services/sanity/image";
 
 export function WorkDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -132,16 +134,12 @@ export function WorkDetailPage() {
               <dd className="mt-1 font-medium">{project.year}</dd>
             </div>
           )}
-
-          {project.disciplines?.length ? (
-            <div>
-              <dt className="text-sm text-slate-500">Disciplines</dt>
-              <dd className="mt-1 font-medium">
-                {project.disciplines.join(", ")}
-              </dd>
-            </div>
-          ) : null}
         </dl>
+
+        <div className="mt-10 border-t border-tertiary-200 pt-8">
+          <ContentTaxonomy category={project.category} tags={project.tags} />
+        </div>
+
         {project.body?.length ? (
           <section className="mx-auto mt-16 max-w-3xl border-t border-slate-200 pt-12">
             <RichText value={project.body} />

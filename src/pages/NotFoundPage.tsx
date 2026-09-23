@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+
 import { usePageMeta } from "../hooks/usePageMeta";
 
 export function NotFoundPage() {

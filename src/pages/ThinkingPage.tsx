@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { getArticles } from "../features/thinking/api/getArticles";
-import type { ArticleSummary } from "../features/thinking/types/article";
-import { urlFor } from "../services/sanity/image";
+
 import { PageLoading } from "../components/feedback/PageLoading";
 import { PageMessage } from "../components/feedback/PageMessage";
+import { getArticles } from "../features/thinking/api/getArticles";
+import type { ArticleSummary } from "../features/thinking/types/article";
 import { usePageMeta } from "../hooks/usePageMeta";
+import { urlFor } from "../services/sanity/image";
 
 export function ThinkingPage() {
   usePageMeta({
