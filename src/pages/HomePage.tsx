@@ -66,16 +66,15 @@ export function HomePage() {
 
   return (
     <main>
-      <section className="border-b border-tertiary-400">
+      <section className="border-b border-tertiary-400 bg-tertiary-200">
         <div className="site-container">
-          <div className="max-w-[786px]">
-            <p className="text-[12px] font-medium uppercase tracking-widest text-tertiary-500">
-              CREATIVE LEADERSHIP • BRAND • EXPERIENCE
-            </p>
-
-            <h1 className="mt-5 text-jumbo tracking-tight md:text-7xl">
-              Building <em>stronger</em> brands, <em>better</em> experiences and{" "}
-              <em>better</em> ways of working.
+          <div className="max-w-[786px] pt-[72px]">
+            <h1 className="mt-5 text-jumbo tracking-tight md:text-7xl text-heading">
+              Building <em className="font-bold tracking-tighter">stronger</em>{" "}
+              brands, <em className="font-bold tracking-tighter">better</em>{" "}
+              experiences and{" "}
+              <em className="font-bold tracking-tighter">better</em> ways of
+              working.
             </h1>
 
             <p className="mt-8 max-w-[440px] leading-[24px] mb-8">
@@ -109,8 +108,8 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="pt-8 bg-primary-200 border-b border-tertiary-400">
-        <div className="site-container flex flex-col gap-8">
+      <section className="pt-8 bg-white border-b border-tertiary-400">
+        <div className="site-container flex flex-col gap-16">
           <Skills skills={content.skills} />
           <SelectedWork projects={content.featuredWork} />
         </div>

@@ -23,7 +23,7 @@ function getNavLinkClasses(isActive: boolean) {
 export function SiteLayout() {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="border-b border-tertiary-400 bg-primary-200 mb-[72px]">
+      <header className="border-b border-tertiary-400 bg-neutral-500">
         <div className="mx-auto grid max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center px-6 h-[50px]">
           <div aria-hidden="true" />
 

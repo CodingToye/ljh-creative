@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 @theme {
+  --font-heading: "Urbanist", sans-serif;
   --font-body: "Inter", sans-serif;
-  --font-serif: "Instrument Serif", serif;
+  --font-serif: "Inria Serif", serif;
   --text-micro: 0.625rem;
   --text-jumbo: 4.5rem;
 }
@@ -13,9 +14,9 @@
   --color-primary-300: #f3ded5;
   --color-primary-200: #f5ede8;
 
-  --color-secondary-500: #a5a48a;
-  --color-secondary-400: #dadac4;
-  --color-secondary-300: #e7e6d9;
+  --color-secondary-500: #7d7d66;
+  --color-secondary-400: #baba99;
+  --color-secondary-300: #deddca;
   --color-secondary-200: #f2efe1;
 
   --color-neutral-500: #353630;
@@ -65,10 +66,14 @@
     color: var(--color-secondary-500);
     font-family: var(--font-serif);
   }
+  h1 {
+    @apply font-heading;
+    @apply font-medium;
+  }
 }
 
 @layer components {
   .site-container {
-    @apply flex mx-auto max-w-[1440px] px-6 pb-4;
+    @apply flex mx-auto max-w-[1440px] px-10 pb-4;
   }
 }
