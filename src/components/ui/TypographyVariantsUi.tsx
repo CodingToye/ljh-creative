@@ -4,12 +4,15 @@ type TypographyStyle = {
   sample: string;
 };
 
-const interHeadings: TypographyStyle[] = [
+const urbanistHeadings: TypographyStyle[] = [
   {
     name: "H1",
-    className: "font-body text-5xl",
+    className: "font-heading font-medium text-5xl",
     sample: "Creative ideas made visible",
   },
+];
+
+const interHeadings: TypographyStyle[] = [
   {
     name: "H2",
     className: "font-body text-4xl",
@@ -65,6 +68,16 @@ export function TypographyVariantsUi() {
           className="font-body text-base font-bold"
           sample="Design is the process of giving ideas a clear and meaningful form."
         />
+      </TypographySection>
+
+      <TypographySection title="Urbanist — Jumbo Headings">
+        {urbanistHeadings.map((style) => (
+          <TypographyPreview
+            key={`extra-bold-${style.name}`}
+            {...style}
+            className={`${style.className} font-extrabold`}
+          />
+        ))}
       </TypographySection>
 
       <TypographySection title="Inter — Extra Bold Headings">

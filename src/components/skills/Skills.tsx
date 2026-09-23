@@ -15,8 +15,8 @@ function getImageUrl(image: SanityImageObject, width: number) {
 export function Skills({ skills }: SkillsProps) {
   return (
     <div className="flex flex-col">
-      <header className="mb-4">
-        <h1 className="text-4xl font-serif">What I bring together</h1>
+      <header className="mb-8 text-center">
+        <h1 className="text-4xl font-heading">What I bring together</h1>
       </header>
       <div
         className="grid gap-3"
@@ -27,23 +27,30 @@ export function Skills({ skills }: SkillsProps) {
         {skills.map((skill) => (
           <article
             key={skill._id}
-            className="flex flex-col gap-4 p-4"
+            className="flex flex-col gap-4 rounded-2xl"
             style={{
               backgroundColor: `var(--color-${skill.backgroundColour}-300)`,
             }}
           >
-            <div className="flex gap-4">
-              <img
-                src={getImageUrl(skill.image, 70)}
-                alt={skill.imageAlt}
-                loading="lazy"
-                decoding="async"
-                className="h-[70px] w-auto"
-              />
-              <h3 className="text-[20px] font-serif">{skill.title}</h3>
-            </div>
-            <div className="flex justify-end">
-              <ActionButton variant={skill.backgroundColour} />
+            <div className="flex h-full justify-between">
+              <div className="p-4">
+                <img
+                  src={getImageUrl(skill.image, 70)}
+                  alt={skill.imageAlt}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-[70px] w-auto mb-4"
+                />
+                <h3 className="text-base/5 font-medium">{skill.title}</h3>
+              </div>
+              <div
+                className="flex flex-col justify-center rounded-r-2xl p-4 bg-red-500"
+                style={{
+                  backgroundColor: `var(--color-${skill.backgroundColour}-400)`,
+                }}
+              >
+                <ActionButton variant={skill.backgroundColour} />
+              </div>
             </div>
           </article>
         ))}
