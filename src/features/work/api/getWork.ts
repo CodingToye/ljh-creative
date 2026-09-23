@@ -1,4 +1,5 @@
 import { sanityClient } from "../../../services/sanity/client";
+import { taxonomyProjection } from "../../taxonomy/api/taxonomyProjection";
 import type { Work } from "../types/work";
 
 const workQuery = `
@@ -10,10 +11,11 @@ const workQuery = `
     summary,
     client,
     year,
-    disciplines,
     heroImage,
     featured,
-    publishedAt
+    publishedAt,
+
+    ${taxonomyProjection}
 }`;
 
 export async function getWork(): Promise<Work[]> {

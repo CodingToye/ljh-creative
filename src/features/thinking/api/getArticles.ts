@@ -1,4 +1,5 @@
 import { sanityClient } from "../../../services/sanity/client";
+import { taxonomyProjection } from "../../taxonomy/api/taxonomyProjection";
 import type { ArticleSummary } from "../types/article";
 
 const articlesQuery = `
@@ -8,9 +9,10 @@ const articlesQuery = `
     "slug": slug.current,
     excerpt,
     coverImage,
-    tags,
     featured,
-    publishedAt
+    publishedAt,
+
+    ${taxonomyProjection}
   }
 `;
 
