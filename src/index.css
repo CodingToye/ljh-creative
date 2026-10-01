@@ -9,26 +9,31 @@
 }
 
 @theme {
+  --color-primary-600: #bc634d;
   --color-primary-500: #e5795e;
   --color-primary-400: #eaaa95;
   --color-primary-300: #f3ded5;
   --color-primary-200: #f5ede8;
 
+  --color-secondary-600: #676754;
   --color-secondary-500: #7d7d66;
   --color-secondary-400: #baba99;
   --color-secondary-300: #deddca;
   --color-secondary-200: #f2efe1;
 
+  --color-neutral-600: #1f201c;
   --color-neutral-500: #353630;
   --color-neutral-400: #9e9e9e;
   --color-neutral-300: #d4d4d4;
   --color-neutral-200: #efefef;
 
+  --color-tertiary-600: #957042;
   --color-tertiary-500: #b68850;
   --color-tertiary-400: #e4d2bf;
   --color-tertiary-300: #eaddd2;
   --color-tertiary-200: #f5f1ea;
 
+  --color-tertiary2-600: #d19035;
   --color-tertiary2-500: #ffb041;
   --color-tertiary2-400: #ffe3bd;
   --color-tertiary2-300: #fff0da;

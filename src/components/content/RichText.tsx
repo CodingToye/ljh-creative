@@ -8,7 +8,7 @@ type RichTextProps = {
 const components: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="mt-5 leading-7 text-slate-700">{children}</p>
+      <p className="mt-5 leading-6 text-slate-700">{children}</p>
     ),
 
     h2: ({ children }) => (

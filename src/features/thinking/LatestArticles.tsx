@@ -10,17 +10,13 @@ export type LatestArticlesProps = {
 export function LatestArticles({ articles }: LatestArticlesProps) {
   return (
     <section className="flex flex-col">
-      <header className="mb-8">
-        <h1 className="text-4xl font-serif mb-4">
-          Thoughts, Ideas &amp; Perspectives
-        </h1>
-        <div className="grid grid-cols-3">
-          <p>
-            Thoughts on creative leadership, customer experience, AI innovation
-            and the systems, processes and frameworks that help designers do
-            their best work.
-          </p>
-        </div>
+      <header className="mb-8 flex flex-col items-center text-center">
+        <h1 className="text-4xl font-heading mb-4">Ideas &amp; Perspectives</h1>
+        <p className="max-w-3xl">
+          Thoughts on creative leadership, customer experience, AI innovation
+          and the systems, processes and frameworks that help designers do their
+          best work.
+        </p>
       </header>
       <div className="grid grid-cols-1 gap-3">
         {articles.length === 0 ? (

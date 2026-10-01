@@ -15,32 +15,32 @@ export type ArticleCardProps = {
 export default function ArticleCard({ article }: ArticleCardProps) {
   console.log(article);
   return (
-    <article>
-      <div className="flex flex-col gap-2 w-full border border-tertiary-400 pb-4">
+    <article className="">
+      <div className="flex flex-col gap-2 w-full border border-tertiary-400 pb-4 rounded-2xl h-full">
         <Link to={`/thinking/${article.slug}`} className="group block">
           {article.coverImage && (
             <div className="">
               <img
                 src={getImageUrl(article.coverImage, 440)}
                 alt={article.coverImage.alt}
-                className="w-full object-cover"
+                className="w-full h-60 object-cover rounded-t-2xl"
                 loading="lazy"
               />
             </div>
           )}
         </Link>
         <div className="py-2 px-4">
-          <ul className="flex flex-wrap">
+          <ul className="flex flex-wrap mb-4">
             {article.tags.map((tag) => (
               <li
                 key={tag._id}
-                className="after:align-middle text-micro uppercase text-tertiary-500 after:mx-2 after:content-['•'] last:after:content-none"
+                className="text-micro uppercase text-tertiary-500 after:mx-2 after:content-['•'] last:after:content-none"
               >
                 {tag.title}
               </li>
             ))}
           </ul>
-          <h2 className="font-serif text-[24px] mb-4">{article.title}</h2>
+          <h2 className="font-body text-xl/6 mb-4">{article.title}</h2>
           <Link
             to={`/thinking/${article.slug}`}
             className="text-primary-500 underline text-sm"
