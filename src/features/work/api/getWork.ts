@@ -6,11 +6,8 @@ const workQuery = `
 *[_type == "work"] | order(displayOrder asc, publishedAt desc) {
     _id,
     title,
-    subtitle,
     "slug": slug.current,
     summary,
-    client,
-    year,
     heroImage,
     featured,
     publishedAt,

@@ -38,13 +38,18 @@ export function CareerJourney({ steps }: CareerJourneyProps) {
                 className="mb-8 size-6 rounded-full border-[5px] bg-tertiary-200"
                 style={{ borderColor: `var(--color-${step.colour}-500)` }}
               />
-              <img
-                src={urlFor(step.icon).height(160).auto("format").url()}
-                alt={step.iconAlt ?? ""}
-                loading="lazy"
-                decoding="async"
-                className="mb-6 h-20 w-auto"
-              />
+              {/* An icon with alt text but no upload has no asset; keep its row in the subgrid */}
+              {step.icon?.asset ? (
+                <img
+                  src={urlFor(step.icon).height(160).auto("format").url()}
+                  alt={step.iconAlt ?? ""}
+                  loading="lazy"
+                  decoding="async"
+                  className="mb-6 h-20 w-auto"
+                />
+              ) : (
+                <span aria-hidden="true" className="mb-6 h-20" />
+              )}
               <div className="flex flex-col h-full">
                 <h3 className="grow mb-6 max-w-full font-heading text-lg/6 font-medium">
                   {step.subtitle}

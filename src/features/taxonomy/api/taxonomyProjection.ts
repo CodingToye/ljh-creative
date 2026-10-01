@@ -3,7 +3,8 @@ export const taxonomyProjection = `
     _id,
     title,
     "slug": slug.current,
-    displayOrder
+    displayOrder,
+    icon
   },
 
   "tags": coalesce(

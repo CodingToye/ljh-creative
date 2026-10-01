@@ -1,19 +1,24 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 
-import { ContentTaxonomy } from "../components/content/ContentTaxonomy";
-import { RichText } from "../components/content/RichText";
+import { CTABox } from "../components/ctaBox/CTABox";
 import { PageLoading } from "../components/feedback/PageLoading";
 import { PageMessage } from "../components/feedback/PageMessage";
+import { Section } from "../components/layout/Section";
+import { PullQuote } from "../components/pullQuote/PullQuote";
+import { LatestArticles } from "../features/thinking/LatestArticles";
 import { getWorkBySlug } from "../features/work/api/getWorkBySlug";
-import type { Work } from "../features/work/types/work";
+import { RelatedWorkCard } from "../features/work/RelatedWorkCard";
+import type { WorkDetail } from "../features/work/types/work";
+import { WorkHeader } from "../features/work/WorkHeader";
+import { WorkHero } from "../features/work/WorkHero";
+import { WorkSection } from "../features/work/WorkSection";
 import { usePageMeta } from "../hooks/usePageMeta";
-import { urlFor } from "../services/sanity/image";
 
 export function WorkDetailPage() {
   const { slug } = useParams<{ slug: string }>();
 
-  const [project, setProject] = useState<Work | null>(null);
+  const [project, setProject] = useState<WorkDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -96,56 +101,92 @@ export function WorkDetailPage() {
 
   return (
     <main>
-      <img
-        src={urlFor(project.heroImage)
-          .width(2000)
-          .height(1200)
-          .fit("crop")
-          .auto("format")
-          .url()}
-        alt={project.heroImage.alt}
-        className="aspect-[5/3] w-full object-cover"
+      <WorkHeader project={project} />
+
+      <WorkHero project={project} />
+
+      <WorkSection title="The reason" section={project.theReason} />
+
+      <WorkSection
+        title="The challenge"
+        section={project.theChallenge}
+        variant="tertiary"
+        imageLayout="featured"
       />
 
-      <div className="mx-auto max-w-5xl px-6 py-12">
-        <Link to="/work" className="text-sm underline underline-offset-4">
-          Back to Work
-        </Link>
+      <WorkSection title="The solution" section={project.theSolution} />
 
-        <header className="mt-8">
-          <h1 className="text-4xl font-bold md:text-6xl">{project.title}</h1>
+      <WorkSection
+        title="The outcome"
+        section={project.theOutcome}
+        variant="tertiary"
+      />
 
-          <p className="mt-6 max-w-3xl text-xl text-slate-600">
-            {project.summary}
-          </p>
-        </header>
+      {project.whatITookForward?.quote?.length ? (
+        <PullQuote
+          title="What I took forward"
+          quote={{ pullQuote: project.whatITookForward.quote }}
+          variant={project.whatITookForward.variant ?? "secondary"}
+        />
+      ) : null}
 
-        <dl className="mt-10 grid gap-6 border-t border-slate-200 pt-8 sm:grid-cols-3">
-          {project.client && (
-            <div>
-              <dt className="text-sm text-slate-500">Client</dt>
-              <dd className="mt-1 font-medium">{project.client}</dd>
+      {project.moreInCategory.length > 0 && (
+        <Section
+          variant="tertiary"
+          container="content"
+          className="overflow-x-hidden"
+        >
+          <header className="mb-8 text-center">
+            <h2 className="text-4xl font-heading">More in this category</h2>
+          </header>
+
+          <div className="relative">
+            {/* Decorative rule running edge to edge behind the cards, at their mid-height */}
+            <div
+              aria-hidden="true"
+              className="absolute top-18 left-1/2 hidden h-px w-screen -translate-x-1/2 bg-neutral-300 md:block"
+            />
+            <div className="relative grid gap-6 md:grid-cols-3">
+              {project.moreInCategory.map((relatedProject) => (
+                <RelatedWorkCard
+                  key={relatedProject._id}
+                  project={relatedProject}
+                />
+              ))}
             </div>
-          )}
+          </div>
+        </Section>
+      )}
 
-          {project.year && (
-            <div>
-              <dt className="text-sm text-slate-500">Year</dt>
-              <dd className="mt-1 font-medium">{project.year}</dd>
-            </div>
-          )}
-        </dl>
+      {project.otherCategories.length > 0 && (
+        <Section variant="white" container="content">
+          <header className="mb-8 text-center">
+            <h2 className="text-4xl font-heading">Other categories</h2>
+          </header>
 
-        <div className="mt-10 border-t border-tertiary-200 pt-8">
-          <ContentTaxonomy category={project.category} tags={project.tags} />
-        </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {project.otherCategories.map((category) => (
+              <CTABox
+                key={category._id}
+                layout="stacked"
+                icon={category.icon}
+                title={category.title}
+                variant={category.colour ?? "neutral"}
+                to={`/work?category=${category.slug}`}
+              />
+            ))}
+          </div>
+        </Section>
+      )}
 
-        {project.body?.length ? (
-          <section className="mx-auto mt-16 max-w-3xl border-t border-slate-200 pt-12">
-            <RichText value={project.body} />
-          </section>
-        ) : null}
-      </div>
+      {project.relatedArticles.length > 0 && (
+        <Section variant="tertiary" container="content">
+          <LatestArticles
+            articles={project.relatedArticles}
+            variant="compact"
+          />
+        </Section>
+      )}
     </main>
   );
 }
