@@ -1,13 +1,33 @@
 import { Link } from "react-router";
 
-import type { HomeContent } from "../home/api/getHomeContent";
 import ArticleCard from "./ArticleCard";
+import type { ArticleSummary } from "./types/article";
 
 export type LatestArticlesProps = {
-  articles: HomeContent["latestArticles"];
+  articles: ArticleSummary[];
+  // Compact is the slimmed-down version: no intro or "explore" link, four smaller cards per row
+  variant?: "default" | "compact";
 };
 
-export function LatestArticles({ articles }: LatestArticlesProps) {
+export function LatestArticles({
+  articles,
+  variant = "default",
+}: LatestArticlesProps) {
+  if (variant === "compact") {
+    return (
+      <section className="flex flex-col">
+        <header className="mb-8 text-center">
+          <h2 className="text-4xl font-heading">Ideas and perspectives</h2>
+        </header>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {articles.map((article) => (
+            <ArticleCard key={article._id} article={article} variant="compact" />
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="flex flex-col">
       <header className="mb-8 flex flex-col items-center text-center">

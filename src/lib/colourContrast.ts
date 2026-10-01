@@ -7,7 +7,7 @@ type RgbColour = {
 const LIGHT_TEXT = "#ffffff";
 const DARK_TEXT = "#0f172a";
 
-function resolveCssColour(colour: string): string {
+export function resolveCssColour(colour: string): string {
   const cssVariable = colour.match(/^var\((--[^,)]+)/)?.[1];
 
   if (!cssVariable) {
