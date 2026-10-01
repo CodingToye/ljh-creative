@@ -1,3 +1,5 @@
+import { useLayoutEffect, useRef, useState } from "react";
+
 type TypographyStyle = {
   name: string;
   className: string;
@@ -133,6 +135,15 @@ function TypographyPreview({
   className,
   sample,
 }: TypographyPreviewProps) {
+  const sampleRef = useRef<HTMLParagraphElement>(null);
+  const [fontSize, setFontSize] = useState<string | null>(null);
+
+  useLayoutEffect(() => {
+    if (!sampleRef.current) return;
+
+    setFontSize(getComputedStyle(sampleRef.current).fontSize);
+  }, [className]);
+
   return (
     <div className="grid gap-3 md:grid-cols-[10rem_minmax(0,1fr)] md:items-baseline shadow shadow-lg border border-black/10 bg-white p-4">
       <div className="font-body text-xs text-slate-500">
@@ -144,9 +155,13 @@ function TypographyPreview({
             .map((value) => `.${value}`)
             .join(" ")}
         </code>
+
+        {fontSize && <p className="mt-1 text-slate-400">{fontSize}</p>}
       </div>
 
-      <p className={className}>{sample}</p>
+      <p ref={sampleRef} className={className}>
+        {sample}
+      </p>
     </div>
   );
 }

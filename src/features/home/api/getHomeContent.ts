@@ -1,6 +1,9 @@
 import { sanityClient } from "../../../services/sanity/client";
 import type { Skill } from "../../skills/types/skills";
-import type { ArticleSummary } from "../../thinking/types/article";
+import {
+  type ArticleSummary,
+  articleSummaryProjection,
+} from "../../thinking/types/article";
 import type { Work } from "../../work/types/work";
 import type { FeatureImageData } from "../types/featureImage";
 
@@ -40,30 +43,7 @@ const homeContentQuery = `
 
     "latestArticles": *[
       _type == "article"
-    ] | order(publishedAt desc)[0...3] {
-      _id,
-      title,
-      "slug": slug.current,
-      excerpt,
-      coverImage,
-      featured,
-      publishedAt,
-
-      category-> {
-         _id,
-         title,
-          "slug": slug.current
-      },
-
-      "tags": coalesce(
-        tags[]-> {
-          _id,
-          title,
-          "slug": slug.current
-        },
-        []
-      )
-    },
+    ] | order(publishedAt desc)[0...3] ${articleSummaryProjection},
 
     "featureImages": coalesce(
   *[_type == "homePage"][0].featureImages[] {

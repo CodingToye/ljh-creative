@@ -15,8 +15,8 @@ const navigation = [
 
 function getNavLinkClasses(isActive: boolean) {
   return [
-    "transition-colors hover:text-slate-950",
-    isActive ? "text-neutral-500" : "text-neutral-400",
+    "transition-colors hover:text-tertiary-500",
+    isActive ? "text-tertiary-500" : "text-neutral-400",
   ].join(" ");
 }
 
@@ -62,9 +62,9 @@ export function SiteLayout() {
         <div className="site-container flex justify-center">
           <div className="flex flex-row gap-16 justify-around">
             <div className="">
-              <h2 className="text-4xl font-serif font-normal">
-                Let’s create <em className="text-white">better</em> experiences
-                together.
+              <h2 className="text-3xl font-heading">
+                Let’s create <em className="text-white font-serif">better</em>{" "}
+                experiences together.
               </h2>
               <p className="text-sm">
                 I partner with leaders who value clarity, creativity and systems
@@ -75,7 +75,7 @@ export function SiteLayout() {
               <ButtonLink
                 to="/"
                 variant="tertiary"
-                className="w-[292px] h-[36px] rounded-none mr-1"
+                className="w-[292px] h-[36px] rounded-2xl mr-1"
               >
                 Get in touch
               </ButtonLink>

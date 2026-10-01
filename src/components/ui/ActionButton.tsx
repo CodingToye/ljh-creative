@@ -13,11 +13,11 @@ type ActionButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variantClasses: Record<ActionButtonVariant, string> = {
-  primary: "bg-primary-500 hover:bg-primary-400",
-  secondary: "bg-secondary-500 hover:bg-secondary-400",
-  neutral: "bg-neutral-500 hover:bg-neutral-400",
-  tertiary: "bg-tertiary-500 hover:bg-tertiary-400",
-  tertiary2: "bg-tertiary2-500 hover:bg-tertiary2-400",
+  primary: "bg-primary-500 hover:bg-primary-600",
+  secondary: "bg-secondary-500 hover:bg-secondary-600",
+  neutral: "bg-neutral-500 hover:bg-neutral-600",
+  tertiary: "bg-tertiary-500 hover:bg-tertiary-600",
+  tertiary2: "bg-tertiary2-500 hover:bg-tertiary2-600",
 };
 
 export function ActionButton({

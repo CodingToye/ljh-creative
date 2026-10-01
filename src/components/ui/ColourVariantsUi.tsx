@@ -1,6 +1,9 @@
 import { useState } from "react";
 
-import { getContrastingTextColour } from "../../lib/colourContrast";
+import {
+  getContrastingTextColour,
+  resolveCssColour,
+} from "../../lib/colourContrast";
 import { colourVariants } from "../../lib/ColourVariants";
 
 export function ColourVariantsUi() {
@@ -33,6 +36,7 @@ export function ColourVariantsUi() {
               .map(([shade, colour]) => {
                 const className = `bg-${variantType}-${shade}`;
                 const textColour = getContrastingTextColour(colour);
+                const hexValue = resolveCssColour(colour);
                 const hasCopied = copiedClass === className;
                 return (
                   <div
@@ -57,6 +61,9 @@ export function ColourVariantsUi() {
                     </button>
                     <span className="mt-1 text-micro font-bold text-black/50">
                       {hasCopied ? "Copied!" : className}
+                    </span>
+                    <span className="text-micro uppercase text-black/40">
+                      {hexValue}
                     </span>
                   </div>
                 );
