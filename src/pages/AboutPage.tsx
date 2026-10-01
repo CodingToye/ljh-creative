@@ -213,33 +213,6 @@ export function AboutPage() {
           <LatestArticles articles={content.articles} variant="compact" />
         </Section>
       )}
-
-      {/* <section className="border-t border-slate-200 bg-slate-50">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-3 md:py-24">
-          <div>
-            <h2 className="text-3xl font-semibold tracking-tight">
-              Areas of practice
-            </h2>
-          </div>
-
-          <div className="md:col-span-2">
-            <ul className="grid gap-x-8 gap-y-4 text-lg sm:grid-cols-2">
-              <li className="border-t border-slate-300 py-4">Brand identity</li>
-              <li className="border-t border-slate-300 py-4">Art direction</li>
-              <li className="border-t border-slate-300 py-4">
-                Editorial design
-              </li>
-              <li className="border-t border-slate-300 py-4">
-                Campaign design
-              </li>
-              <li className="border-t border-slate-300 py-4">Illustration</li>
-              <li className="border-t border-slate-300 py-4">
-                Creative strategy
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section> */}
     </main>
   );
 }

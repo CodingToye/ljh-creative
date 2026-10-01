@@ -34,8 +34,6 @@ const homeContentQuery = `
       title,
       "slug": slug.current,
       summary,
-      client,
-      year,
       heroImage,
       featured,
       publishedAt

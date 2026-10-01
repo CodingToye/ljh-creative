@@ -4,26 +4,22 @@ import { Link } from "react-router";
 
 import type { ColourToken } from "../../features/skills/types/skills";
 import { urlFor } from "../../services/sanity/image";
+import { PlayButton } from "../ui/PlayButton";
+
+// inline: icon beside a large title, with body text below.
+// stacked: compact box with the icon above a small title, no body text.
+export type CTABoxLayout = "inline" | "stacked";
 
 type CTABoxProps = {
-  icon: SanityImageObject;
+  icon?: SanityImageObject | null;
   iconAlt?: string;
   title: string;
-  content: string;
+  content?: string;
   variant?: ColourToken;
+  layout?: CTABoxLayout;
   // Optional destination for the play button; without it the strip is decorative
   to?: string;
 };
-
-function PlayButton() {
-  return (
-    <span className="flex size-10 items-center justify-center rounded-full bg-(--cta-box-button) text-white">
-      <svg aria-hidden="true" viewBox="0 0 12 14" className="ml-0.5 h-3.5 w-3 fill-current">
-        <path d="M0 0v14l12-7z" />
-      </svg>
-    </span>
-  );
-}
 
 export function CTABox({
   icon,
@@ -31,6 +27,7 @@ export function CTABox({
   title,
   content,
   variant = "primary",
+  layout = "inline",
   to,
 }: CTABoxProps) {
   // Each variant uses the same shades: 200 box, 300 strip, 500 button
@@ -40,29 +37,49 @@ export function CTABox({
     "--cta-box-button": `var(--color-${variant}-500)`,
   } as CSSProperties;
 
-  const stripClasses =
-    "flex w-16 shrink-0 items-center justify-center bg-(--cta-box-strip)";
+  const isStacked = layout === "stacked";
+
+  const stripClasses = `flex shrink-0 items-center justify-center bg-(--cta-box-strip) ${
+    isStacked ? "w-12" : "w-16"
+  }`;
+
+  // An icon with alt text but no upload has no asset
+  const iconImage = icon?.asset && (
+    <img
+      src={urlFor(icon).height(160).auto("format").url()}
+      alt={iconAlt ?? ""}
+      loading="lazy"
+      decoding="async"
+      // self-start stops the stacked (flex column) layout stretching it to full width
+      className={`w-auto shrink-0 self-start object-contain ${isStacked ? "h-16" : "h-20"}`}
+    />
+  );
 
   return (
     <article
       className="flex overflow-hidden rounded-lg bg-(--cta-box-bg)"
       style={variantStyles}
     >
-      <div className="flex-1 p-8">
-        <header className="flex items-center gap-8">
-          <img
-            src={urlFor(icon).height(160).auto("format").url()}
-            alt={iconAlt ?? ""}
-            loading="lazy"
-            decoding="async"
-            className="h-20 w-auto shrink-0"
-          />
-          <h3 className="font-heading text-2xl/8 whitespace-pre-line">
+      {isStacked ? (
+        <div className="flex flex-1 flex-col justify-between gap-4 p-5">
+          {iconImage}
+          <h3 className="font-heading text-sm/5 font-medium whitespace-pre-line">
             {title}
           </h3>
-        </header>
-        <p className="mt-6 text-sm/6 whitespace-pre-line">{content}</p>
-      </div>
+        </div>
+      ) : (
+        <div className="flex-1 p-8">
+          <header className="flex items-center gap-8">
+            {iconImage}
+            <h3 className="font-heading text-2xl/8 whitespace-pre-line">
+              {title}
+            </h3>
+          </header>
+          {content && (
+            <p className="mt-6 text-sm/6 whitespace-pre-line">{content}</p>
+          )}
+        </div>
+      )}
 
       {to ? (
         <Link
@@ -70,11 +87,11 @@ export function CTABox({
           aria-label={title}
           className={`${stripClasses} transition-opacity hover:opacity-80`}
         >
-          <PlayButton />
+          <PlayButton className="bg-(--cta-box-button) text-white" />
         </Link>
       ) : (
         <div aria-hidden="true" className={stripClasses}>
-          <PlayButton />
+          <PlayButton className="bg-(--cta-box-button) text-white" />
         </div>
       )}
     </article>

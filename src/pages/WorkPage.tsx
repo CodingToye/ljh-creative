@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 
 import { PageLoading } from "../components/feedback/PageLoading";
 import { PageMessage } from "../components/feedback/PageMessage";
@@ -14,6 +14,8 @@ export function WorkPage() {
     description:
       "Explore selected creative projects, case studies and client work by Lisa.",
   });
+  const [searchParams] = useSearchParams();
+  const categorySlug = searchParams.get("category");
   const [projects, setProjects] = useState<Work[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,21 +41,44 @@ export function WorkPage() {
   }
 
   if (error) {
-    return;
-    <PageMessage title="Unable to load work" message={error} variant="error" />;
+    return (
+      <PageMessage
+        title="Unable to load work"
+        message={error}
+        variant="error"
+      />
+    );
   }
+
+  // ?category=<slug> (linked from "Other categories" on project pages) narrows the list
+  const visibleProjects = categorySlug
+    ? projects.filter((project) => project.category?.slug === categorySlug)
+    : projects;
+  const activeCategory = visibleProjects[0]?.category;
+
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
       <h1 className="text-4xl font-bold">Work</h1>
 
-      {projects.length === 0 ? (
+      {categorySlug && (
+        <p className="mt-4 text-sm">
+          {activeCategory
+            ? `Showing work in ${activeCategory.title}. `
+            : "No work in this category yet. "}
+          <Link to="/work" className="underline">
+            Show all work
+          </Link>
+        </p>
+      )}
+
+      {visibleProjects.length === 0 && !categorySlug ? (
         <PageMessage
           title="No work published yet"
           message="Published projects will appear here."
         />
       ) : (
         <div className="mt-8 grid gap-8 md:grid-cols-2">
-          {projects.map((project) => (
+          {visibleProjects.map((project) => (
             <article key={project._id}>
               <Link to={`/work/${project.slug}`} className="group block">
                 {project.heroImage && (
@@ -69,18 +94,9 @@ export function WorkPage() {
                     loading="lazy"
                   />
                 )}
-                <h2 className="text-2xl font-semibold">
-                  {project.title} <br />
-                  <span>{project.subtitle}</span>
-                </h2>
+                <h2 className="text-2xl font-semibold">{project.title}</h2>
 
                 <p className="mt-2 text-slate-600">{project.summary}</p>
-
-                {(project.client || project.year) && (
-                  <p className="mt-3 text-sm text-slate-500">
-                    {[project.client, project.year].filter(Boolean).join(" · ")}
-                  </p>
-                )}
               </Link>
             </article>
           ))}

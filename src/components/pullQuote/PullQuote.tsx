@@ -1,12 +1,17 @@
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
 import type { CSSProperties } from "react";
 
-import type { PullQuoteData } from "../../features/pullQuote/types/pullQuote";
 import type { ColourToken } from "../../features/skills/types/skills";
 
 type PullQuoteProps = {
-  quote: PullQuoteData;
+  // Without a full quote, the pull quote is shown on its own in a single column
+  quote: {
+    pullQuote: PortableTextBlock[];
+    fullQuote?: PortableTextBlock[] | null;
+  };
   variant?: ColourToken;
+  title?: string;
 };
 
 // One rounded "6"-style mark; drawn twice to form the opening quote
@@ -19,7 +24,11 @@ const components: PortableTextComponents = {
   },
 };
 
-export function PullQuote({ quote, variant = "secondary" }: PullQuoteProps) {
+export function PullQuote({
+  quote,
+  variant = "secondary",
+  title,
+}: PullQuoteProps) {
   // Each variant uses the same shades: 300 background, 400 quote mark, 500 emphasis
   const variantStyles = {
     "--pull-quote-bg": `var(--color-${variant}-300)`,
@@ -27,12 +36,26 @@ export function PullQuote({ quote, variant = "secondary" }: PullQuoteProps) {
     "--pull-quote-em": `var(--color-${variant}-500)`,
   } as CSSProperties;
 
+  const hasFullQuote = Boolean(quote.fullQuote?.length);
+
   return (
     <section
       className="bg-(--pull-quote-bg) [&_em]:text-(--pull-quote-em) [&_em]:font-bold"
       style={variantStyles}
     >
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-8 md:grid-cols-[minmax(0,1fr)_minmax(0,470px)] md:py-8">
+      {title && (
+        <header className="px-6 pt-8 text-center">
+          <h2 className="text-4xl font-heading">{title}</h2>
+        </header>
+      )}
+
+      <div
+        className={
+          hasFullQuote
+            ? "mx-auto grid max-w-7xl gap-10 px-6 py-8 md:grid-cols-[minmax(0,1fr)_minmax(0,470px)] md:py-8"
+            : "mx-auto max-w-5xl px-6 py-8"
+        }
+      >
         <figure className="flex gap-6">
           <svg
             aria-hidden="true"
@@ -47,9 +70,11 @@ export function PullQuote({ quote, variant = "secondary" }: PullQuoteProps) {
           </blockquote>
         </figure>
 
-        <div className="font-body text-base/6 font-normal">
-          <PortableText value={quote.fullQuote} components={components} />
-        </div>
+        {hasFullQuote && quote.fullQuote && (
+          <div className="font-body text-base/6 font-normal">
+            <PortableText value={quote.fullQuote} components={components} />
+          </div>
+        )}
       </div>
     </section>
   );
