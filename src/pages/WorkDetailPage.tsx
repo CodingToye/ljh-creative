@@ -99,6 +99,10 @@ export function WorkDetailPage() {
     );
   }
 
+  const otherCategories = project.otherCategories.filter(
+    (category) => category._id !== project.category?._id,
+  );
+
   return (
     <main className="relative">
       <WorkHeader project={project} />
@@ -158,14 +162,14 @@ export function WorkDetailPage() {
         </Section>
       )}
 
-      {project.otherCategories.length > 0 && (
+      {otherCategories.length > 0 && (
         <Section variant="white" container="content">
           <header className="mb-8 text-center">
-            <h2 className="text-4xl font-heading">Other categories</h2>
+            <h2 className="font-heading text-4xl">Other categories</h2>
           </header>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {project.otherCategories.map((category) => (
+            {otherCategories.map((category) => (
               <CTABox
                 key={category._id}
                 layout="stacked"
