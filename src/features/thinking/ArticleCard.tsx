@@ -40,7 +40,7 @@ export default function ArticleCard({
   return (
     <article>
       <div
-        className={`flex h-full w-full flex-col gap-2 border ${cardClasses[variant]}`}
+        className={`flex h-full w-full flex-col gap-2 border bg-white ${cardClasses[variant]}`}
       >
         <Link to={`/thinking/${article.slug}`} className="group block">
           {article.coverImage && (
