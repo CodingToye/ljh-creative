@@ -100,7 +100,7 @@ export function WorkDetailPage() {
   }
 
   return (
-    <main>
+    <main className="relative">
       <WorkHeader project={project} />
 
       <WorkHero project={project} />

@@ -23,7 +23,7 @@ function getNavLinkClasses(isActive: boolean) {
 export function SiteLayout() {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="border-b border-tertiary-400 bg-neutral-500">
+      <header className="bg-neutral-500">
         <div className="mx-auto grid max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center px-6 h-[50px]">
           <div aria-hidden="true" />
 
@@ -54,9 +54,9 @@ export function SiteLayout() {
         </div>
       </header>
 
-      <div className="flex-1">
+      <section className="flex-1">
         <Outlet />
-      </div>
+      </section>
 
       <footer className="bg-neutral-500 text-white p-8">
         <div className="site-container flex justify-center">
