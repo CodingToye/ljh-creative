@@ -4,10 +4,11 @@ import type {
   WorkSectionData,
   WorkSectionImage,
   WorkSectionImageSize,
+  WorkSectionMedia,
 } from "./types/work";
 
-// Default sizing for images with no size set in Sanity.
-// equal: every image is standard. featured: the first image is wide.
+// Default sizing for media with no size set in Sanity.
+// equal: every item is standard. featured: the first item is wide.
 export type WorkSectionImageLayout = "equal" | "featured";
 
 type WorkSectionProps = {
@@ -17,7 +18,8 @@ type WorkSectionProps = {
   imageLayout?: WorkSectionImageLayout;
 };
 
-// Column span on the 3-column grid, plus an aspect ratio for the stacked mobile layout
+// Column span on the 3-column grid, plus an aspect ratio
+// for the stacked mobile layout.
 const sizeClasses: Record<WorkSectionImageSize, string> = {
   standard: "aspect-square sm:aspect-auto",
   wide: "aspect-[2/1] sm:col-span-2 sm:aspect-auto",
@@ -30,13 +32,13 @@ const sizeColumns: Record<WorkSectionImageSize, number> = {
   full: 3,
 };
 
-function getImageSize(
-  image: WorkSectionImage,
+function getMediaSize(
+  media: WorkSectionMedia,
   index: number,
   imageLayout: WorkSectionImageLayout,
 ): WorkSectionImageSize {
-  if (image.size) {
-    return image.size;
+  if (media.size) {
+    return media.size;
   }
 
   return imageLayout === "featured" && index === 0 ? "wide" : "standard";
@@ -51,6 +53,18 @@ function getImageUrl(image: WorkSectionImage, size: WorkSectionImageSize) {
     .url();
 }
 
+function isValidMedia(media: WorkSectionMedia): boolean {
+  if (media._type === "image") {
+    return Boolean(media.asset);
+  }
+
+  if (media._type === "file") {
+    return Boolean(media.url);
+  }
+
+  return false;
+}
+
 export function WorkSection({
   title,
   section,
@@ -58,16 +72,18 @@ export function WorkSection({
   imageLayout = "equal",
 }: WorkSectionProps) {
   const content = section?.content;
-  // Skip images that have fields filled in (size, alt) but no file uploaded yet
-  const images = (section?.images ?? []).filter((image) => image.asset);
+
+  // Skip media entries that haven't had a file uploaded yet.
+  const media = (section?.images ?? []).filter(isValidMedia);
+
   const caption = section?.caption;
   const bannerImage = section?.bannerImage?.asset ? section.bannerImage : null;
 
-  if (!content && images.length === 0 && !bannerImage) {
+  if (!content && media.length === 0 && !bannerImage) {
     return null;
   }
 
-  // A blank line in the text box starts a new paragraph
+  // A blank line in the text box starts a new paragraph.
   const paragraphs = content?.split(/\n\s*\n/) ?? [];
 
   return (
@@ -102,23 +118,39 @@ export function WorkSection({
             </p>
           ))}
 
-          {images.length > 0 && (
+          {media.length > 0 && (
             <figure className="mt-12">
-              {/* Rows are one column-width tall (container width minus the two gaps, / 3),
-                so every image in a row shares the same height whatever it spans */}
+              {/* Rows are one column-width tall (container width minus
+                  the two gaps, / 3), so every item in a row shares
+                  the same height whatever it spans. */}
               <div className="@container">
                 <div className="grid gap-6 sm:grid-cols-3 sm:auto-rows-[calc((100cqw-3rem)/3)] md:gap-10 md:auto-rows-[calc((100cqw-5rem)/3)]">
-                  {images.map((image, index) => {
-                    const size = getImageSize(image, index, imageLayout);
+                  {media.map((item, index) => {
+                    const size = getMediaSize(item, index, imageLayout);
+                    const classes = sizeClasses[size];
+
+                    if (item._type === "file") {
+                      return (
+                        <video
+                          key={item._key}
+                          src={item.url ?? undefined}
+                          controls
+                          playsInline
+                          preload="metadata"
+                          aria-label={item.title ?? "Project video"}
+                          className={`size-full bg-black object-contain ${classes}`}
+                        />
+                      );
+                    }
 
                     return (
                       <img
-                        key={image._key}
-                        src={getImageUrl(image, size)}
-                        alt={image.alt ?? ""}
+                        key={item._key}
+                        src={getImageUrl(item, size)}
+                        alt={item.alt ?? ""}
                         loading="lazy"
                         decoding="async"
-                        className={`size-full object-cover ${sizeClasses[size]}`}
+                        className={`size-full object-cover ${classes}`}
                       />
                     );
                   })}

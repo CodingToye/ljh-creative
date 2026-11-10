@@ -7,6 +7,17 @@ import type { WorkDetail } from "../types/work";
 // - moreInCategory: up to 3 other projects in this project's category
 // - otherCategories: every other category
 // - relatedArticles: 4 articles, same-category ones first, then the most recent
+
+const workSectionProjection = `{
+  ...,
+  images[]{
+    ...,
+    _type == "file" => {
+      "url": asset->url
+    }
+  }
+}`;
+
 const workBySlugQuery = `
   *[_type == "work" && slug.current == $slug][0] {
     _id,
@@ -20,13 +31,19 @@ const workBySlugQuery = `
     format,
     audience,
     responsibilities,
-    theReason,
-    theChallenge,
-    theSolution,
-    theOutcome,
+    theReason ${workSectionProjection},
+    theChallenge ${workSectionProjection},
+    theSolution ${workSectionProjection},
+    theOutcome ${workSectionProjection},
     whatITookForward,
-    heroImage,
+        heroImage,
     body,
+    images[]{
+      ...,
+      _type == "file" => {
+        "url": asset->url
+      }
+    },
     featured,
     publishedAt,
 
