@@ -63,10 +63,11 @@ export function SiteLayout() {
           <div className="flex flex-row gap-16 justify-around">
             <div className="">
               <h2 className="text-3xl font-heading">
-                Let’s create <em className="text-white font-serif">better</em>{" "}
+                Let’s create{" "}
+                <em className="text-secondary-400 font-serif">better</em>{" "}
                 experiences together.
               </h2>
-              <p className="text-sm">
+              <p className="text-sm text-secondary-400">
                 I partner with leaders who value clarity, creativity and systems
                 that scale.
               </p>

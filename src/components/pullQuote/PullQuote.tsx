@@ -65,7 +65,7 @@ export function PullQuote({
             <path d={QUOTE_MARK_PATH} />
             <path d={QUOTE_MARK_PATH} transform="translate(26 0)" />
           </svg>
-          <blockquote className="font-heading text-4xl/10 font-medium">
+          <blockquote className="font-heading text-2xl/8 font-regular">
             <PortableText value={quote.pullQuote} components={components} />
           </blockquote>
         </figure>
