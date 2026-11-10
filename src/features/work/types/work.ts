@@ -13,16 +13,27 @@ export type PortfolioImage = SanityImageObject & {
 export type WorkSectionImageSize = "standard" | "wide" | "full";
 
 export type WorkSectionImage = SanityImageObject & {
+  _type: "image";
   _key: string;
   alt?: string;
   size?: WorkSectionImageSize | null;
 };
 
-// A case-study section: text followed by a row of captioned images
+export type WorkSectionVideo = {
+  _type: "file";
+  _key: string;
+  title?: string;
+  size?: WorkSectionImageSize | null;
+  url?: string | null;
+};
+
+export type WorkSectionMedia = WorkSectionImage | WorkSectionVideo;
+
+// A case-study section: text followed by images and videos
 export type WorkSectionData = {
   bannerImage?: (SanityImageObject & { alt?: string }) | null;
   content?: string | null;
-  images?: WorkSectionImage[] | null;
+  images?: WorkSectionMedia[] | null;
   caption?: string | null;
 };
 
