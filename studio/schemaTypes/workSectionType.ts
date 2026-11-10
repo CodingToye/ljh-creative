@@ -36,12 +36,14 @@ export const workSectionType = defineType({
     }),
     defineField({
       name: 'images',
-      title: 'Images',
+      title: 'Images & Videos',
       type: 'array',
       description: 'Laid out on a 3-column grid below the content, in order.',
       of: [
+        // Images
         defineArrayMember({
           type: 'image',
+          title: 'Image',
           options: {
             hotspot: true,
           },
@@ -66,6 +68,38 @@ export const workSectionType = defineType({
               title: 'Alternative text',
               type: 'string',
               description: 'Describe the image for accessibility.',
+              validation: (rule) => rule.required(),
+            }),
+          ],
+        }),
+
+        // Videos
+        defineArrayMember({
+          type: 'file',
+          title: 'Video',
+          options: {
+            accept: 'video/*',
+          },
+          fields: [
+            defineField({
+              name: 'size',
+              title: 'Size',
+              type: 'string',
+              description: 'How many of the 3 grid columns this video spans.',
+              options: {
+                list: [
+                  {title: 'Standard (1 column)', value: 'standard'},
+                  {title: 'Wide (2 columns)', value: 'wide'},
+                  {title: 'Full width (3 columns)', value: 'full'},
+                ],
+                layout: 'radio',
+                direction: 'horizontal',
+              },
+            }),
+            defineField({
+              name: 'title',
+              title: 'Video title',
+              type: 'string',
               validation: (rule) => rule.required(),
             }),
           ],
