@@ -134,9 +134,11 @@ export function WorkSection({
                         <video
                           key={item._key}
                           src={item.url ?? undefined}
-                          controls
+                          autoPlay
+                          loop
+                          muted
                           playsInline
-                          preload="metadata"
+                          preload="auto"
                           aria-label={item.title ?? "Project video"}
                           className={`size-full bg-black object-contain ${classes}`}
                         />
