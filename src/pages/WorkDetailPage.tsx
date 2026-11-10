@@ -145,11 +145,6 @@ export function WorkDetailPage() {
           </header>
 
           <div className="relative">
-            {/* Decorative rule running edge to edge behind the cards, at their mid-height */}
-            <div
-              aria-hidden="true"
-              className="absolute top-18 left-1/2 hidden h-px w-screen -translate-x-1/2 bg-neutral-300 md:block"
-            />
             <div className="relative grid gap-6 md:grid-cols-3">
               {project.moreInCategory.map((relatedProject) => (
                 <RelatedWorkCard
