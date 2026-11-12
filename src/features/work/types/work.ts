@@ -10,7 +10,7 @@ export type PortfolioImage = SanityImageObject & {
   alt: string;
 };
 
-export type WorkSectionImageSize = "standard" | "wide" | "full";
+export type WorkSectionImageSize = "standard" | "wide" | "full" | "bleed";
 
 export type WorkSectionImage = SanityImageObject & {
   _type: "image";

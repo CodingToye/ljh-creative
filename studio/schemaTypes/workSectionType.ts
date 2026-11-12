@@ -58,6 +58,7 @@ export const workSectionType = defineType({
                   {title: 'Standard (1 column)', value: 'standard'},
                   {title: 'Wide (2 columns)', value: 'wide'},
                   {title: 'Full width (3 columns)', value: 'full'},
+                  {title: 'Full Bleed (Edge to Edge)', value: 'bleed'},
                 ],
                 layout: 'radio',
                 direction: 'horizontal',
